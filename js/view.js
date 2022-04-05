@@ -97,8 +97,7 @@ export function createFavoriteList(list) {
 
 
 function createForecastList(list) {
-	UI_ELEMENTS.FORECAST.LIST.textContent = ''
-
+	UI_ELEMENTS.FORECAST.LIST.textContent = '';
 	for (const item of list) {
 		let date = new Date(item.dt * 1000);
 		let month = date.getMonth();
