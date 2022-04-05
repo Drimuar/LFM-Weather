@@ -4,20 +4,23 @@ import { UI_ELEMENTS, SERVER, favoriteList } from './const.js';
 
 createFavoriteList(favoriteList);
 
-UI_ELEMENTS.SEARCH.FORM.addEventListener('submit', searchWeather);
+UI_ELEMENTS.SEARCH.FORM.addEventListener('submit', showWeather);
 UI_ELEMENTS.NOW.LIKE.addEventListener('click', addFavorite);
 for (const remove of UI_ELEMENTS.LOCATIONS.ALLREMOVE) {
 	remove.addEventListener('click', removeFavorite);
 }
 for (const city of UI_ELEMENTS.LOCATIONS.ALLCITY) {
-	city.addEventListener('click', searchWeather);
+	city.addEventListener('click', showWeather);
 }
 
 
 function removeFavorite(e) {
 	e.preventDefault();
 	e.target.closest('.right-block__item').remove();
-	UI_ELEMENTS.NOW.LIKE.src = "./img/icons/like.svg";
+	const isCurrentCity = UI_ELEMENTS.NOW.CITY.textContent === this.previousElementSibling.textContent;
+	if (isCurrentCity) {
+		UI_ELEMENTS.NOW.LIKE.src = "./img/icons/like.svg";
+	}
 	delete favoriteList[this.previousElementSibling.textContent];
 }
 
@@ -40,12 +43,12 @@ function addFavorite(e) {
 		remove.addEventListener('click', removeFavorite);
 	}
 	for (const city of UI_ELEMENTS.LOCATIONS.ALLCITY) {
-		city.addEventListener('click', searchWeather);
+		city.addEventListener('click', showWeather);
 	}
 }
 
 
-function searchWeather(e) {
+function showWeather(e) {
 	e.preventDefault();
 	let city;
 	const isSearchField = this.className === "search";
