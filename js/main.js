@@ -1,13 +1,12 @@
 import { createFavoriteList, showWeatherDetails, showWeatherForecast, showWeatherNow } from './view.js';
-import { UI_ELEMENTS, SERVER, favoriteList } from './const.js';
+import { UI_ELEMENTS, SERVER } from './const.js';
 import { storage } from './localStorage.js';
 
-
-//storage.saveFavoriteCities(favoriteCities)
-//const favoriteCities = storage.getFavoriteCities();
+console.log(localStorage);
+export const favoriteCities = storage.getFavoriteCities();
 const currentCity = storage.getCurrentCity();
 
-createFavoriteList(favoriteList);
+createFavoriteList(favoriteCities);
 loadWeather(currentCity);
 
 UI_ELEMENTS.SEARCH.FORM.addEventListener('submit', showWeather);
@@ -27,14 +26,15 @@ function removeFavorite(e) {
 	if (isCurrentCity) {
 		UI_ELEMENTS.NOW.LIKE.src = "./img/icons/like.svg";
 	}
-	delete favoriteList[this.previousElementSibling.textContent];
+	delete favoriteCities[this.previousElementSibling.textContent];
+	storage.saveFavoriteCities(favoriteCities);
 }
 
 
 function addFavorite(e) {
 	e.preventDefault();
 	const cityName = UI_ELEMENTS.NOW.CITY.textContent;
-	for (const item in favoriteList) {
+	for (const item in favoriteCities) {
 		if (item === cityName) {
 			return;
 		}
@@ -43,7 +43,8 @@ function addFavorite(e) {
 	UI_ELEMENTS.NOW.LIKE.src = "./img/icons/likefill.svg";
 	const htmlBlock = `<li class="right-block__item"><span class="right-block__city">${cityName}</span><button class="right-block__remove">X</button></li>`;
 	UI_ELEMENTS.LOCATIONS.LIST.insertAdjacentHTML("beforeend", htmlBlock);
-	favoriteList[cityName] = htmlBlock;
+	favoriteCities[cityName] = htmlBlock;
+	storage.saveFavoriteCities(favoriteCities);
 
 	for (const remove of UI_ELEMENTS.LOCATIONS.ALLREMOVE) {
 		remove.addEventListener('click', removeFavorite);
@@ -63,7 +64,7 @@ function loadWeather(city) {
 	showWeatherNow(weather);
 	showWeatherDetails(weather);
 	showWeatherForecast(forecast);
-	localStorage.setItem("currentCity", city);
+	storage.saveCurrentCity(city);
 }
 
 function showWeather(e) {

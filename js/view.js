@@ -1,4 +1,5 @@
-import { KELVIN, ICON_URL, UI_ELEMENTS, monthNames, favoriteList } from "./const.js";
+import { KELVIN, ICON_URL, UI_ELEMENTS, monthNames } from "./const.js";
+import { favoriteCities } from "./main.js";
 
 
 export function showWeatherNow(json) {
@@ -25,7 +26,7 @@ export function showWeatherNow(json) {
 			UI_ELEMENTS.NOW.CITY.textContent = json.name;
 			UI_ELEMENTS.NOW.DEGREE.textContent = `${Math.floor(degree)}°`;
 			UI_ELEMENTS.NOW.LIKE.classList.remove("hidden");
-			if (!favoriteList[json.name]) {
+			if (!favoriteCities[json.name]) {
 				UI_ELEMENTS.NOW.LIKE.src = "./img/icons/like.svg";
 			} else {
 				UI_ELEMENTS.NOW.LIKE.src = "./img/icons/likefill.svg";

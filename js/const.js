@@ -39,9 +39,6 @@ export const UI_ELEMENTS = {
 	},
 }
 
-export const favoriteList = {
-	Moscow: `<li class="right-block__item"><span class="right-block__city">Moscow</span><button class="right-block__remove">X</button></li>`
-};
 
 export const monthNames = ["January", "February", "March", "April", "May", "June",
 	"July", "August", "September", "October", "November", "December"
