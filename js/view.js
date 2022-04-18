@@ -11,7 +11,7 @@ export function showWeatherNow(json) {
 		})
 		.catch(err => {
 			UI_ELEMENTS.NOW.DEGREE.textContent = '0°';
-			UI_ELEMENTS.NOW.CITY.textContent = 'City';
+			UI_ELEMENTS.NOW.CITY.textContent = '';
 			UI_ELEMENTS.NOW.IMAGE.src = '';
 			UI_ELEMENTS.NOW.LIKE.classList.add("hidden");
 			UI_ELEMENTS.NOW.LIKE.src = "./img/icons/like.svg";
@@ -44,7 +44,7 @@ export function showWeatherDetails(json) {
 			return json;
 		})
 		.catch(err => {
-			UI_ELEMENTS.DETAILS.CITY.textContent = 'City';
+			UI_ELEMENTS.DETAILS.CITY.textContent = '';
 			UI_ELEMENTS.DETAILS.TEMPERATURE.textContent = '0°';
 			UI_ELEMENTS.DETAILS.FEELS.textContent = '0°';
 			UI_ELEMENTS.DETAILS.WEATHER.textContent = '';
@@ -77,7 +77,7 @@ export function showWeatherForecast(json) {
 			return json;
 		})
 		.catch(err => {
-			UI_ELEMENTS.FORECAST.CITY.textContent = 'City';
+			UI_ELEMENTS.FORECAST.CITY.textContent = '';
 			UI_ELEMENTS.FORECAST.LIST.textContent = '';
 			alert(err.message);
 			throw err;

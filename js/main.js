@@ -1,8 +1,14 @@
 import { createFavoriteList, showWeatherDetails, showWeatherForecast, showWeatherNow } from './view.js';
 import { UI_ELEMENTS, SERVER, favoriteList } from './const.js';
+import { storage } from './localStorage.js';
 
+
+//storage.saveFavoriteCities(favoriteCities)
+//const favoriteCities = storage.getFavoriteCities();
+const currentCity = storage.getCurrentCity();
 
 createFavoriteList(favoriteList);
+loadWeather(currentCity);
 
 UI_ELEMENTS.SEARCH.FORM.addEventListener('submit', showWeather);
 UI_ELEMENTS.NOW.LIKE.addEventListener('click', addFavorite);
@@ -48,6 +54,18 @@ function addFavorite(e) {
 }
 
 
+function loadWeather(city) {
+	if (city === "null" || !city) {
+		return;
+	}
+	const weather = getData(city, SERVER.WEATHER_URL);
+	const forecast = getData(city, SERVER.FORECAST_URL, SERVER.STEPS, SERVER.UNITS);
+	showWeatherNow(weather);
+	showWeatherDetails(weather);
+	showWeatherForecast(forecast);
+	localStorage.setItem("currentCity", city);
+}
+
 function showWeather(e) {
 	e.preventDefault();
 	let city;
@@ -58,11 +76,8 @@ function showWeather(e) {
 		city = this.textContent;
 	}
 
-	const weather = getData(city, SERVER.WEATHER_URL);
-	const forecast = getData(city, SERVER.FORECAST_URL, SERVER.STEPS, SERVER.UNITS);
-	showWeatherNow(weather);
-	showWeatherDetails(weather);
-	showWeatherForecast(forecast);
+
+	loadWeather(city)
 }
 
 
