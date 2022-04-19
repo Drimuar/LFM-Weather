@@ -2,9 +2,8 @@ import { createFavoriteList, showWeatherDetails, showWeatherForecast, showWeathe
 import { UI_ELEMENTS, SERVER } from './const.js';
 import { storage } from './localStorage.js';
 
-console.log(localStorage);
-export const favoriteCities = storage.getFavoriteCities();
-const currentCity = storage.getCurrentCity();
+export let favoriteCities = storage.getFavoriteCities();
+let currentCity = storage.getCurrentCity();
 
 createFavoriteList(favoriteCities);
 loadWeather(currentCity);
@@ -67,6 +66,7 @@ function loadWeather(city) {
 	storage.saveCurrentCity(city);
 }
 
+
 function showWeather(e) {
 	e.preventDefault();
 	let city;
@@ -76,16 +76,15 @@ function showWeather(e) {
 	} else {
 		city = this.textContent;
 	}
-
-
-	loadWeather(city)
+	loadWeather(city);
 }
 
 
-function getData(city, serverUrl, steps = '', units = '') {
+async function getData(city, serverUrl, steps = '', units = '') {
 	const cityName = city;
 	const url = `${serverUrl}?q=${cityName}&appid=${SERVER.API_KEY}${steps}${units}`;
-	let json = fetch(url).then(response => response.json());
+	const response = await fetch(url);
+	const json = await response.json();
 	return json;
 }
 
