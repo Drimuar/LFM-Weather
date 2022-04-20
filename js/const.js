@@ -1,6 +1,10 @@
 export const KELVIN = 273.15;
 export const ICON_URL = 'http://openweathermap.org/img/wn/';
 
+export const like = "./img/icons/like.svg";
+export const activeLike = "./img/icons/likefill.svg";
+
+
 export const SERVER = {
 	WEATHER_URL: 'http://api.openweathermap.org/data/2.5/weather',
 	FORECAST_URL: 'http://api.openweathermap.org/data/2.5/forecast',

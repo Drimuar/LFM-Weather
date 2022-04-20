@@ -1,4 +1,4 @@
-import { KELVIN, ICON_URL, UI_ELEMENTS, monthNames } from "./const.js";
+import { KELVIN, ICON_URL, UI_ELEMENTS, monthNames, like, activeLike } from "./const.js";
 import { favoriteCities } from "./main.js";
 
 
@@ -13,7 +13,7 @@ export async function showWeatherNow(weather) {
 		UI_ELEMENTS.NOW.CITY.textContent = '';
 		UI_ELEMENTS.NOW.IMAGE.src = '';
 		UI_ELEMENTS.NOW.LIKE.classList.add("hidden");
-		UI_ELEMENTS.NOW.LIKE.src = "./img/icons/like.svg";
+		UI_ELEMENTS.NOW.LIKE.src = like;
 		alert(err.message);
 		throw err;
 	}
@@ -24,9 +24,9 @@ export async function showWeatherNow(weather) {
 	UI_ELEMENTS.NOW.DEGREE.textContent = `${Math.floor(degree)}°`;
 	UI_ELEMENTS.NOW.LIKE.classList.remove("hidden");
 	if (!favoriteCities[json.name]) {
-		UI_ELEMENTS.NOW.LIKE.src = "./img/icons/like.svg";
+		UI_ELEMENTS.NOW.LIKE.src = like;
 	} else {
-		UI_ELEMENTS.NOW.LIKE.src = "./img/icons/likefill.svg";
+		UI_ELEMENTS.NOW.LIKE.src = activeLike;
 	}
 }
 
