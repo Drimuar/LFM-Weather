@@ -479,6 +479,8 @@ body {
 .now-frame__like {
   margin: 14px;
   cursor: pointer;
+  min-width: 20px;
+  min-height: 20px;
 }
 
 .details-frame {
@@ -604,7 +606,7 @@ body {
   cursor: pointer;
 }
 .tab-buttons:hover {
-  background-color: #818181;
+  background-color: rgb(129, 129, 129);
 }
 
 .tab-buttons.current {

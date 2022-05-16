@@ -42,8 +42,3 @@ export const UI_ELEMENTS = {
 		ALLREMOVE: document.getElementsByClassName("right-block__remove"),
 	},
 }
-
-
-export const monthNames = ["January", "February", "March", "April", "May", "June",
-	"July", "August", "September", "October", "November", "December"
-];

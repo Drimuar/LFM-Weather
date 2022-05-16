@@ -101,6 +101,8 @@ body {
 	&__like {
 		margin: 14px;
 		cursor: pointer;
+		min-width: 20px;
+		min-height: 20px;
 	}
 }
 .details-frame {

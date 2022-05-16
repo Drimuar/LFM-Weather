@@ -1,4 +1,6 @@
-import { createFavoriteList, showWeatherDetails, showWeatherForecast, showWeatherNow } from './view.js';
+import {
+	createFavoriteList, showWeatherDetails, showWeatherForecast, showWeatherNow
+} from './view.js';
 import { UI_ELEMENTS, SERVER, like, activeLike } from './const.js';
 import { storage } from './localStorage.js';
 
@@ -7,8 +9,7 @@ let currentCity = storage.getCurrentCity();
 
 createFavoriteList(favoriteCities);
 loadWeather(currentCity);
-
-
+console.log(currentCity)
 UI_ELEMENTS.SEARCH.FORM.addEventListener('submit', showWeather);
 UI_ELEMENTS.NOW.LIKE.addEventListener('click', addFavorite);
 for (const remove of UI_ELEMENTS.LOCATIONS.ALLREMOVE) {

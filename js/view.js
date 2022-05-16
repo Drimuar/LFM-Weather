@@ -1,6 +1,8 @@
-import { KELVIN, ICON_URL, UI_ELEMENTS, monthNames, like, activeLike } from "./const.js";
+import { KELVIN, ICON_URL, UI_ELEMENTS, like, activeLike } from "./const.js";
 import { favoriteCities } from "./main.js";
+import { format, add } from 'date-fns';
 
+const krskTimezone = -7;
 
 export async function showWeatherNow(weather) {
 	const json = await weather;
@@ -48,14 +50,15 @@ export async function showWeatherDetails(weather) {
 		throw err;
 	}
 	let degree = (temp, KELVIN) => temp - KELVIN;
-	const sunrise = new Date(json.sys.sunrise * 1000);
-	const sunset = new Date(json.sys.sunset * 1000);
+	const timezone = json.timezone / 3600 + krskTimezone;
+	const sunrise = add(new Date(json.sys.sunrise * 1000), { hours: timezone });
+	const sunset = add(new Date(json.sys.sunset * 1000), { hours: timezone });
 	UI_ELEMENTS.DETAILS.CITY.textContent = json.name;
 	UI_ELEMENTS.DETAILS.TEMPERATURE.textContent = `${Math.floor(degree(json.main.temp, KELVIN))}°`;
 	UI_ELEMENTS.DETAILS.FEELS.textContent = `${Math.floor(degree(json.main.feels_like, KELVIN))}°`;
 	UI_ELEMENTS.DETAILS.WEATHER.textContent = json.weather[0].main;
-	UI_ELEMENTS.DETAILS.SUNRISE.textContent = `${sunrise.getHours().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}:${sunrise.getMinutes().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}`;
-	UI_ELEMENTS.DETAILS.SUNSET.textContent = `${sunset.getHours().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}:${sunset.getMinutes().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}`;
+	UI_ELEMENTS.DETAILS.SUNRISE.textContent = format(sunrise, "HH:mm");
+	UI_ELEMENTS.DETAILS.SUNSET.textContent = format(sunset, "HH:mm");
 }
 
 
@@ -87,16 +90,12 @@ function createForecastList(list) {
 	UI_ELEMENTS.FORECAST.LIST.textContent = '';
 	for (const item of list) {
 		let date = new Date(item.dt * 1000);
-		let month = date.getMonth();
-		let day = date.getDate();
-		let hours = date.getHours().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false });
-		let minutes = date.getMinutes().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false });
 
 		UI_ELEMENTS.FORECAST.LIST.insertAdjacentHTML("beforeend",
 			`<li class="forecast-frame__item">
 				<div class="item__top">
-					<p class="item__date">${day} ${monthNames[month]}</p>
-					<p class="item__time">${hours}:${minutes}</p>
+					<p class="item__date">${format(date, "d")} ${format(date, "LLL")}</p>
+					<p class="item__time">${format(date, "HH")}:${format(date, "mm")}</p>
 				</div>
 				<div class="item__bottom">
 					<div class="item__left">
